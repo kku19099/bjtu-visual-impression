@@ -5,16 +5,18 @@
 ---
 
 ## 项目结构
-├── base/ # 底库图像（需自行放置）
-├── query/ # 查询图像（需自行放置）
-├── step1_extract_features.py # 步骤1：提取图像特征
+
+``` 
+├── base/                        # 底库图像（需自行放置）
+├── query/                       # 查询图像（需自行放置）
+├── step1_extract_features.py    # 步骤1：提取图像特征
 ├── step2_search_and_evaluate.py # 步骤2：检索并计算 P@K
 ├── step3_visualize_detection.py # 步骤3：文字检测与可视化
-├── results/ # 运行结果
-│ ├── P@K_*.png # 12 张地标 P@K 折线图
-│ └── visualization/ # 24 组检索+文字检测可视化图
+├── results/                     # 运行结果
+│   ├── P@K_*.png               # 12 张地标 P@K 折线图
+│   └── visualization/           # 24 组检索+文字检测可视化图
 └── README.md
-
+```
 
 ---
 
