@@ -37,51 +37,50 @@
 ```bash
 pip install torch torchvision pillow numpy matplotlib tqdm scikit-learn
 pip install easyocr
+```
 
-EasyOCR 首次运行时会自动下载检测模型（约 100 MB），请保持网络畅通。
+> EasyOCR 首次运行时会自动下载检测模型（约 100 MB），请保持网络畅通。
 
-运行说明
-确保 base/ 和 query/ 文件夹与本项目脚本放在同一目录下。
+## 运行说明
+确保`base/`和`query/`文件夹与本项目脚本放在同一目录下。
 
-步骤1：提取图像特征
+### 步骤1：提取图像特征
+
+```bash
 python step1_extract_features.py
+```
 
 运行后会生成两个文件：
+- `base_features.pkl` — 底库所有图像的特征向量
+- `query_features.pkl` — 查询图像的特征向量
 
-base_features.pkl — 底库所有图像的特征向量
+### 步骤2：检索与 P@K 评估
 
-query_features.pkl — 查询图像的特征向量
-
-步骤2：检索与 P@K 评估
+```bash
 python step2_search_and_evaluate.py
+```
 
 运行后会：
+- 对每一张 query 图像在 base 中进行检索
+- 按 12 个地标类别分别计算 P@20、P@40、P@60
+- 生成 12 张`P@K_类别.png`折线图，保存在当前目录
 
-对每一张 query 图像在 base 中进行检索
+### 步骤3：文字检测与可视化
 
-按 12 个地标类别分别计算 P@20、P@40、P@60
-
-生成 12 张 P@K_类别.png 折线图，保存在当前目录
-
-步骤3：文字检测与可视化
+```bash
 python step3_visualize_detection.py
+```
 
 运行后会：
+- 对每个地标随机选取 2 张 query 图像
+- 检索最相似的 4 张 base 图像
+- 使用 EasyOCR 检测所有图片中的文字区域并绘制红框
+- 拼接生成 24 组对比图，保存在`visualization_results/`文件夹
 
-对每个地标随机选取 2 张 query 图像
+## 结果展示
+- **图像检索性能**：12 张 P@K 折线图（见`results/`）
+- **文字检测可视化**：24 组“检索 + 检测”对比图（见`results/visualization/`）
 
-检索最相似的 4 张 base 图像
-
-使用 EasyOCR 检测所有图片中的文字区域并绘制红框
-
-拼接生成 24 组对比图，保存在 visualization_results/ 文件夹
-
-结果展示
-图像检索性能：12 张 P@K 折线图（见 results/）
-
-文字检测可视化：24 组“检索 + 检测”对比图（见 results/visualization/）
-
-说明
-本实验全程未使用数据集的类别标签进行训练，检索仅依赖 ImageNet 预训练 ResNet-50 特征，文字检测使用 EasyOCR 通用中文检测模型。
-
-提供的 base/ 和 query/ 数据集仅供本课程作业使用，不包含在本仓库中。
+## 说明
+- 本实验全程未使用数据集的类别标签进行训练，检索仅依赖 ImageNet 预训练 ResNet-50 特征，文字检测使用 EasyOCR 通用中文检测模型。
+- 提供的`base/`和`query/`数据集仅供本课程作业使用，不包含在本仓库中。
